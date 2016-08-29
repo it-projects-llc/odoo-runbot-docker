@@ -1,7 +1,9 @@
 FROM odoo:8.0
 
+USER root
+
 RUN apt-get update && \
-    apt-get install -y python-matplotlib emacs-nox git net-tools tree python-pip file nginx python-dev sudo htop locales locales-all postfix wget fonts-dejavu && \
+    apt-get install -y python-matplotlib emacs-nox git net-tools tree python-pip file nginx python-dev sudo htop locales locales-all wget fonts-dejavu && \
      pip install gevent psycogreen && \
      #update werkzeug to make phantomjs work. See http://odoo-development.readthedocs.io/en/latest/dev/tests/js.html#regular-phantom-js-tests
      pip install werkzeug --upgrade
@@ -31,21 +33,25 @@ RUN service nginx reload && \
 
 ENV BUILD_DATE=2016_08_05
 
-RUN git clone https://github.com/yelizariev/runbot-addons.git /mnt/runbot-addons && \
-    git clone https://github.com/odoo/odoo-extra.git /mnt/odoo-extra
+RUN git clone -b 8.0 https://github.com/yelizariev/runbot-addons.git /mnt/runbot-addons && \
+    git clone https://github.com/odoo/odoo-extra.git /mnt/odoo-extra && \
+    rm -rf /mnt/odoo-extra/website_twitter_wall
 
 # grant access to work dir
 RUN chown odoo:odoo -R /mnt/odoo-extra/runbot/static/
 
+RUN true && \
+    # auto_reload
+    sed -i -e "s/auto_reload = True/; auto_reload = True/" /etc/odoo/openerp-server.conf && \
+    # addons_path:
+    sed -i -e "s;addons_path.*;addons_path = /mnt/odoo-extra,/mnt/extra-addons,/mnt/runbot-addons,/usr/lib/python2.7/dist-packages/openerp/addons;" /etc/odoo/openerp-server.conf && \
+    # dbfilter:
+    sed -i -e "s/; dbfilter.*/dbfilter = ^runbot$/" /etc/odoo/openerp-server.conf && \
+    # After restarting docker, you  need to trigger hook:
+    # runbot.example.com:18069/runbot/hook/1
+    # it's required to reload nginx
+    sed -i -e "s;^case;sleep 30 \&\& wget -q -O- localhost:8069/runbot/hook/1 > /dev/null \&\ncase;" /entrypoint.sh
 
-# Update config
-# TODO addons path
-# TODO dbfilter
+VOLUME ["/mnt/odoo-extra", "/mnt/runbot-addons"]
 
-# update entrypoint.sh
-
-
-# TODO. After restarting docker, you  need to trigger hook:
-# runbot.example.com:18069/runbot/hook/1
-# it's required to reload nginx
-
+USER odoo
