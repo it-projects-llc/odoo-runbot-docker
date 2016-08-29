@@ -101,7 +101,12 @@ Notes for private repository:
 ## Change master password
 
     ODOO_MASTER_PASS=`< /dev/urandom tr -dc A-Za-z0-9 | head -c${1:-12};echo;`
-    # TODO
+    docker exec -i -u root -t odoo-runbot sed -i "s/; admin_passwd = admin/admin_passwd = $ODOO_MASTER_PASS/" /etc/odoo/openerp-server.conf.txt
+
+## Restart docker
+
+*See below*
+    
     
 # After deployment
 
