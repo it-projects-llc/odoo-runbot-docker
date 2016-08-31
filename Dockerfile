@@ -9,19 +9,21 @@ RUN apt-get update && \
      pip install werkzeug --upgrade
 
 
-# install phantom. Taken from https://gist.github.com/julionc/7476620/
-RUN apt-get update && \
-    apt-get install build-essential chrpath libssl-dev libxft-dev -y && \
-    apt-get install libfreetype6 libfreetype6-dev -y && \
-    apt-get install libfontconfig1 libfontconfig1-dev -y
+# install phantomjs (from https://hub.docker.com/r/cmfatih/phantomjs/~/dockerfile/ )
+ENV PHANTOMJS_VERSION 1.9.8
 
-ENV PHANTOM_VERSION="phantomjs-1.9.8"
-ENV PHANTOM_JS="$PHANTOM_VERSION-linux-i686"
-
-RUN wget https://bitbucket.org/ariya/phantomjs/downloads/$PHANTOM_JS.tar.bz2 && \
-    tar xvjf $PHANTOM_JS.tar.bz2 && \
-    mv $PHANTOM_JS /usr/local/share && \
-    ln -sf /usr/local/share/$PHANTOM_JS/bin/phantomjs /usr/local/bin
+RUN \
+  apt-get install -y libfreetype6 libfontconfig bzip2 && \
+  mkdir -p /srv/var && \
+  wget -q --no-check-certificate -O /tmp/phantomjs-$PHANTOMJS_VERSION-linux-x86_64.tar.bz2 https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-$PHANTOMJS_VERSION-linux-x86_64.tar.bz2 && \
+  tar -xjf /tmp/phantomjs-$PHANTOMJS_VERSION-linux-x86_64.tar.bz2 -C /tmp && \
+  rm -f /tmp/phantomjs-$PHANTOMJS_VERSION-linux-x86_64.tar.bz2 && \
+  mv /tmp/phantomjs-$PHANTOMJS_VERSION-linux-x86_64/ /srv/var/phantomjs && \
+  ln -s /srv/var/phantomjs/bin/phantomjs /usr/bin/phantomjs && \
+  git clone https://github.com/n1k0/casperjs.git /srv/var/casperjs && \
+  ln -s /srv/var/casperjs/bin/casperjs /usr/bin/casperjs && \
+  apt-get autoremove -y && \
+  apt-get clean all
 
 # fix access issue with nginx
 RUN touch /var/log/nginx/error.log && \
