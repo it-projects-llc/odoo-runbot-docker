@@ -24,9 +24,8 @@ RUN wget https://bitbucket.org/ariya/phantomjs/downloads/$PHANTOM_JS.tar.bz2 && 
     ln -sf /usr/local/share/$PHANTOM_JS/bin/phantomjs /usr/local/bin
 
 # fix access issue with nginx
-RUN service nginx reload && \
-    service nginx start && \
-    service nginx stop && \
+RUN touch /var/log/nginx/error.log && \
+    touch /var/log/nginx/access.log && \
     chown odoo:odoo -R /var/log/nginx
 
 
@@ -45,12 +44,10 @@ RUN true && \
     sed -i -e "s/auto_reload = True/; auto_reload = True/" /etc/odoo/openerp-server.conf && \
     # addons_path:
     sed -i -e "s;addons_path.*;addons_path = /mnt/odoo-extra,/mnt/extra-addons,/mnt/runbot-addons,/usr/lib/python2.7/dist-packages/openerp/addons;" /etc/odoo/openerp-server.conf && \
+    # db_name:
+    sed -i -e "s/; db_name.*/db_name = runbot/" /etc/odoo/openerp-server.conf && \
     # dbfilter:
-    sed -i -e "s/; dbfilter.*/dbfilter = ^runbot$/" /etc/odoo/openerp-server.conf && \
-    # After restarting docker, you  need to trigger hook:
-    # runbot.example.com:18069/runbot/hook/1
-    # it's required to reload nginx
-    sed -i -e "s;^case;sleep 30 \&\& wget -q -O- localhost:8069/runbot/hook/1 > /dev/null \&\ncase;" /entrypoint.sh
+    sed -i -e "s/; dbfilter.*/dbfilter = ^runbot$/" /etc/odoo/openerp-server.conf
 
 VOLUME ["/mnt/odoo-extra", "/mnt/runbot-addons"]
 
