@@ -28,8 +28,8 @@ RUN \
 # fix access issue with nginx
 RUN touch /var/log/nginx/error.log && \
     touch /var/log/nginx/access.log && \
-    chown odoo:odoo -R /var/log/nginx
-
+    chown odoo:odoo -R /var/log/nginx && \
+    chown odoo:odoo -R /var/lib/nginx/
 
 
 ENV BUILD_DATE=2016_08_05
@@ -45,12 +45,10 @@ RUN true && \
     # auto_reload
     sed -i -e "s/auto_reload = True/; auto_reload = True/" /etc/odoo/openerp-server.conf && \
     # addons_path:
-    sed -i -e "s;addons_path.*;addons_path = /mnt/odoo-extra,/mnt/extra-addons,/mnt/runbot-addons,/usr/lib/python2.7/dist-packages/openerp/addons;" /etc/odoo/openerp-server.conf && \
-    # db_name:
-    sed -i -e "s/; db_name.*/db_name = runbot/" /etc/odoo/openerp-server.conf && \
-    # dbfilter:
-    sed -i -e "s/; dbfilter.*/dbfilter = ^runbot$/" /etc/odoo/openerp-server.conf
+    sed -i -e "s;addons_path.*;addons_path = /mnt/odoo-extra,/mnt/extra-addons,/mnt/runbot-addons,/usr/lib/python2.7/dist-packages/openerp/addons;" /etc/odoo/openerp-server.conf
 
 VOLUME ["/mnt/odoo-extra", "/mnt/runbot-addons"]
+
+CMD ["openerp-server", "--database=runbot", "--db-filter=^runbot$"]
 
 USER odoo

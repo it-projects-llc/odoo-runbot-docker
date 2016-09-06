@@ -27,6 +27,10 @@ Then add configs for nginx:
 
 Restart nginx.
 
+## Postfix container
+
+    docker run -e MAILNAME=example.com --name postfix -d itprojectsllc/postfix-docker
+
 ## Postgres container
 
 Run (create) postgres docker (we use 9.5 due to [postgres bug](https://github.com/odoo/odoo/issues/8585) )
@@ -41,7 +45,10 @@ Run (create) runbot container (change ``runbot.local`` to your host)
     -h runbot.local \
     -p 18069:8069 \
     -p 8080:8080 \
-    --name odoo-runbot --link db-9.5:db \
+    -v /some/path:/var/lib/odoo \
+    --link db-9.5:db \
+    --link postfix:postfix \
+    --name odoo-runbot \
     -t itprojectsllc/odoo-runbot-docker
     
 Note. If you need to change something in docker run configuration (e.g. fix host name, you have stop container and then remove it):
@@ -103,6 +110,7 @@ Notes for private repository:
     ODOO_MASTER_PASS=`< /dev/urandom tr -dc A-Za-z0-9 | head -c${1:-12};echo;`
     docker exec -i -u root -t odoo-runbot sed -i "s/; admin_passwd = admin/admin_passwd = $ODOO_MASTER_PASS/" /etc/odoo/openerp-server.conf.txt
 
+    
 ## Restart docker
 
 *See below*
@@ -119,4 +127,10 @@ For any manipulation inside odoo-runbot container you need to connect to it:
 ## Restart containers
 
     docker stop odoo-runbot && docker stop db-9.5 && docker start db-9.5 && docker start -a odoo-runbot
-    
+
+## External dependencies
+
+Connect to runbot container and install requiremnts, e.g.
+
+    wget -q -O- https://raw.githubusercontent.com/it-projects-llc/odoo-saas-tools/8.0/requirements.txt | pip install
+
