@@ -34,7 +34,7 @@ RUN touch /var/log/nginx/error.log && \
 
 ENV BUILD_DATE=2016_08_05
 
-RUN git clone -b 8.0 https://github.com/yelizariev/runbot-addons.git /mnt/runbot-addons && \
+RUN git clone -b 8.0 https://github.com/it-projects-llc/runbot-addons.git /mnt/runbot-addons && \
     git clone https://github.com/odoo/odoo-extra.git /mnt/odoo-extra && \
     rm -rf /mnt/odoo-extra/website_twitter_wall
 
