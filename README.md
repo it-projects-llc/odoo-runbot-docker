@@ -51,7 +51,7 @@ Run (create) runbot container (change ``runbot.local`` to your host)
     --name odoo-runbot \
     -t itprojectsllc/odoo-runbot-docker
     
-Note. If you need to change something in docker run configuration (e.g. fix host name, you have stop container and then remove it):
+Note. If you need to change something in docker run configuration (e.g. fix host name), you have stop container and then remove it:
 
     docker rm odoo-runbot
 
