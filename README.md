@@ -27,9 +27,9 @@ Then add configs for nginx:
 
 Restart nginx.
 
-## Postfix container
+## Postfix container (change ``runbot.local`` to your host)
 
-    docker run -e MAILNAME=example.com --name postfix -d itprojectsllc/postfix-docker
+    docker run -e MAILNAME=runbot.local --name postfix -d itprojectsllc/postfix-docker
 
 ## Postgres container
 
@@ -61,7 +61,7 @@ Create personal *access token* https://github.com/settings/tokens
 
 For each repository create Webhook:
 
-* **link**: http://runbot.example.com:18069/runbot/hook/misc-addons
+* **link**: http://runbot.local:18069/runbot/hook/misc-addons
  where *misc-addons* is a nickname of your runbot.repo record. 
 * **Content Type**: application/x-www-form-urlencoded
 * **Which events would you like to trigger this webhook?**: Send me everything.
@@ -70,7 +70,7 @@ For each repository create Webhook:
 
 Create database with a name ``runbot`` via the link:
 
-    http://runbot.example.com:18069/web/database/manager
+    http://runbot.local:18069/web/database/manager
     
 Then install module ``runbot_custom``.
 
