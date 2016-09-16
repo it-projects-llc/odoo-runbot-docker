@@ -134,3 +134,6 @@ Connect to runbot container and install requiremnts, e.g.
 
     wget -q -O- https://raw.githubusercontent.com/it-projects-llc/odoo-saas-tools/8.0/requirements.txt | pip install
 
+## Update runbot-addons
+
+    docker exec -i --user=root -t odoo-runbot  git -C /mnt/runbot-addons/ pull
