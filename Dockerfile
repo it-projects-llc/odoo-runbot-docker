@@ -42,6 +42,8 @@ RUN git clone -b 8.0 https://github.com/it-projects-llc/runbot-addons.git /mnt/r
 RUN chown odoo:odoo -R /mnt/odoo-extra/runbot/static/
 
 RUN true && \
+    # always close cron db connnections
+    sed -i "s/if len(db_names) > 1:/if True:/" /usr/lib/python2.7/dist-packages/openerp/service/server.py && \
     # auto_reload
     sed -i -e "s/auto_reload = True/; auto_reload = True/" /etc/odoo/openerp-server.conf && \
     # addons_path:
