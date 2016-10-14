@@ -46,6 +46,9 @@ RUN true && \
     sed -i "s/if len(db_names) > 1:/if True:/" /usr/lib/python2.7/dist-packages/openerp/service/server.py && \
     # auto_reload
     sed -i -e "s/auto_reload = True/; auto_reload = True/" /etc/odoo/openerp-server.conf && \
+    # limits:
+    sed -i -e "s/; limit_time_cpu.*/limit_time_cpu = 300/" /etc/odoo/openerp-server.conf && \
+    sed -i -e "s/; limit_time_real.*/limit_time_real = 600/" /etc/odoo/openerp-server.conf && \
     # addons_path:
     sed -i -e "s;addons_path.*;addons_path = /mnt/odoo-extra,/mnt/extra-addons,/mnt/runbot-addons,/usr/lib/python2.7/dist-packages/openerp/addons;" /etc/odoo/openerp-server.conf
 
