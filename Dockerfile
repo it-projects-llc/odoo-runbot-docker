@@ -51,6 +51,6 @@ RUN true && \
 
 VOLUME ["/mnt/odoo-extra", "/mnt/runbot-addons"]
 
-CMD ["openerp-server", "--database=runbot", "--db-filter=^runbot$"]
+CMD ["openerp-server", "--database=runbot", "--db-filter=^runbot$", "--workers=2"]
 
 USER odoo
