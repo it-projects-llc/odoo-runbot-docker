@@ -58,8 +58,10 @@ Note. If you need to change something in docker run configuration (e.g. fix host
 ## Change master password
 
     ODOO_MASTER_PASS=`< /dev/urandom tr -dc A-Za-z0-9 | head -c${1:-12};echo;`
-    docker exec -i -u root -t odoo-runbot sed -i "s/; admin_passwd = admin/admin_passwd = $ODOO_MASTER_PASS/" /etc/odoo/openerp-server.conf.txt
+    docker exec -i -u root -t odoo-runbot sed -i "s/; admin_passwd = admin/admin_passwd = $ODOO_MASTER_PASS/" /etc/odoo/openerp-server.conf
+    docker restart odoo-runbot
     echo "password: $ODOO_MASTER_PASS"
+    
 
 ## Github configuration
 
