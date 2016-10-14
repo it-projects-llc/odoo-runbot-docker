@@ -55,6 +55,12 @@ Note. If you need to change something in docker run configuration (e.g. fix host
 
     docker rm odoo-runbot
 
+## Change master password
+
+    ODOO_MASTER_PASS=`< /dev/urandom tr -dc A-Za-z0-9 | head -c${1:-12};echo;`
+    docker exec -i -u root -t odoo-runbot sed -i "s/; admin_passwd = admin/admin_passwd = $ODOO_MASTER_PASS/" /etc/odoo/openerp-server.conf.txt
+    echo "password: $ODOO_MASTER_PASS"
+
 ## Github configuration
 
 Create personal *access token* https://github.com/settings/tokens
@@ -104,12 +110,6 @@ Notes for private repository:
      > git clone git@github.com:it-projects-llc/misc-addons.git
 
   * add deployments keys to repo https://developer.github.com/guides/managing-deploy-keys/
-
-## Change master password
-
-    ODOO_MASTER_PASS=`< /dev/urandom tr -dc A-Za-z0-9 | head -c${1:-12};echo;`
-    docker exec -i -u root -t odoo-runbot sed -i "s/; admin_passwd = admin/admin_passwd = $ODOO_MASTER_PASS/" /etc/odoo/openerp-server.conf.txt
-
     
 ## Restart docker
 
