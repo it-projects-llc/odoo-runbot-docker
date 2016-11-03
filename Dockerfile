@@ -32,7 +32,7 @@ RUN touch /var/log/nginx/error.log && \
     chown odoo:odoo -R /var/lib/nginx/
 
 
-ENV BUILD_DATE=2016_08_05
+ENV BUILD_DATE=2016_11_03
 
 RUN git clone -b 8.0 https://github.com/it-projects-llc/runbot-addons.git /mnt/runbot-addons && \
     git clone https://github.com/odoo/odoo-extra.git /mnt/odoo-extra && \
