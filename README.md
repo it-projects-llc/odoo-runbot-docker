@@ -89,8 +89,7 @@ Now, For each repository create runbot.repo record:
 * **Nginx**: ``Yes`` (for odoo repo - ``No``)
 * **Github token**: *access token*
 * **Extra dependencies**: Odoo and other repos 
-* **Install updated modules**: ``Yes`` (for odoo repo - ``No``)
-* **Other modules to install automatically**: None
+* **Other modules to install automatically**: ``Repository modules (excluding dependencies)`` (for odoo repo - ``None``)
 * **Nickname** -- string to be used in urls
 
 Notes for private repository:
@@ -112,6 +111,17 @@ Notes for private repository:
      > git clone git@github.com:it-projects-llc/misc-addons.git
 
   * add deployments keys to repo https://developer.github.com/guides/managing-deploy-keys/
+  
+Pylint support:
+
+* create a repo with config file pylint, e.g. https://github.com/it-projects-llc/pylint-conf/blob/master/pylint-conf/pylint.cfg
+* create runbot.repo record for it
+* on your repo, where you want to use pylint checks:
+  * add the repo with pylint config to dependencies
+  * set checkbox **Check pylint**
+  * specify path in **Pylint conf path**, e.g. *pylint-conf/pylint.cfg*
+  * set **Pylint extra parameters** to *--load-plugins=pylint_odoo -f parseable*
+
     
 ## Restart docker
 
