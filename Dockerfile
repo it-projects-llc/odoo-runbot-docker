@@ -4,9 +4,14 @@ USER root
 
 RUN apt-get update && \
     apt-get install -y python-matplotlib emacs-nox git net-tools tree python-pip file nginx python-dev sudo htop locales locales-all wget fonts-dejavu && \
-     pip install gevent psycogreen && \
-     #update werkzeug to make phantomjs work. See http://odoo-development.readthedocs.io/en/latest/dev/tests/js.html#regular-phantom-js-tests
-     pip install werkzeug --upgrade
+    pip install gevent psycogreen && \
+    #update werkzeug to make phantomjs work. See http://odoo-development.readthedocs.io/en/latest/dev/tests/js.html#regular-phantom-js-tests
+    pip install werkzeug --upgrade && \
+    apt-get install -y npm python-lxml libxml2-dev libxslt1-dev && \
+    wget -q -O- https://raw.githubusercontent.com/OCA/pylint-odoo/master/requirements.txt | xargs pip install && \
+    # Extra package for pylint-odoo plugin
+    npm install -g jshint
+
 
 
 # install phantomjs (based on https://hub.docker.com/r/cmfatih/phantomjs/~/dockerfile/ )
@@ -35,6 +40,8 @@ RUN touch /var/log/nginx/error.log && \
 ENV BUILD_DATE=2016_11_03
 
 RUN git clone -b 8.0 https://github.com/it-projects-llc/runbot-addons.git /mnt/runbot-addons && \
+    pip install --upgrade pylint && \
+    pip install --upgrade git+https://github.com/oca/pylint-odoo.git && \
     git clone https://github.com/odoo/odoo-extra.git /mnt/odoo-extra && \
     rm -rf /mnt/odoo-extra/website_twitter_wall
 
