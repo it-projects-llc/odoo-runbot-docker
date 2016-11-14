@@ -93,24 +93,24 @@ Now, For each repository create runbot.repo record:
 * **Nickname** -- string to be used in urls
 
 Notes for private repository:
-* **Repository**: use ssh  link, e.g. ``git@github.com:it-projects-llc/mic-addons.git``
+* **Repository**: use ssh  link, e.g. ``git@github.com:it-projects-llc/misc-addons.git``
 * Configure ssh keys
 
   * connect to docker as odoo:
 
-  > docker exec -i --user=odoo -t odoo-runbot /bin/bash
+    > docker exec -i --user=odoo -t odoo-runbot /bin/bash
  
   * generate key
 
      > ssh-keygen -t rsa -b 4096 -C "runbot deployment key for private repo"
+
+  * add deployments keys to repo https://developer.github.com/guides/managing-deploy-keys/
 
   * try clone manually once
 
      > cd /tmp/
  
      > git clone git@github.com:it-projects-llc/misc-addons.git
-
-  * add deployments keys to repo https://developer.github.com/guides/managing-deploy-keys/
   
 Pylint support:
 
