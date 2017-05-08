@@ -45,7 +45,7 @@ Run (create) runbot container (change ``runbot.local`` to your host)
     -h runbot.local \
     -p 18069:8069 \
     -p 8080:8080 \
-    -v /some/path:/var/lib/odoo \
+    -v /SOME/PATH:/var/lib/odoo \
     --link db-9.5:db \
     --link postfix:postfix \
     --name odoo-runbot \
