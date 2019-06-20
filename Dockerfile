@@ -42,8 +42,7 @@ ENV BUILD_DATE=2016_11_03
 RUN git clone -b 8.0 https://github.com/it-projects-llc/runbot-addons.git /mnt/runbot-addons && \
     pip install --upgrade pylint && \
     pip install --upgrade git+https://github.com/oca/pylint-odoo.git && \
-    git clone https://github.com/odoo/odoo-extra.git /mnt/odoo-extra && \
-    rm -rf /mnt/odoo-extra/website_twitter_wall
+    git clone -b runbot-docker https://github.com/yelizariev/odoo-extra.git /mnt/odoo-extra
 
 # grant access to work dir
 RUN chown odoo:odoo -R /mnt/odoo-extra/runbot/static/
