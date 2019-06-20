@@ -8,7 +8,6 @@ RUN apt-get update || true && \
     #update werkzeug to make phantomjs work. See http://odoo-development.readthedocs.io/en/latest/dev/tests/js.html#regular-phantom-js-tests
     pip install werkzeug --upgrade && \
     apt-get install -y npm python-lxml libxml2-dev libxslt1-dev && \
-    wget -q -O- https://raw.githubusercontent.com/OCA/pylint-odoo/master/requirements.txt | xargs pip install && \
     # Extra package for pylint-odoo plugin
     npm install -g jshint
 
@@ -40,6 +39,7 @@ RUN touch /var/log/nginx/error.log && \
 ENV BUILD_DATE=2016_11_03
 
 RUN git clone -b 8.0 https://github.com/it-projects-llc/runbot-addons.git /mnt/runbot-addons && \
+    pip install --upgrade pip setuptools && \
     pip install --upgrade pylint && \
     pip install --upgrade git+https://github.com/oca/pylint-odoo.git && \
     git clone -b runbot-docker https://github.com/yelizariev/odoo-extra.git /mnt/odoo-extra
