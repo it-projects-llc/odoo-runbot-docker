@@ -8,7 +8,6 @@ RUN apt-get update || true && \
     #update werkzeug to make phantomjs work. See http://odoo-development.readthedocs.io/en/latest/dev/tests/js.html#regular-phantom-js-tests
     pip install werkzeug --upgrade && \
     apt-get install -y npm python-lxml libxml2-dev libxslt1-dev && \
-    wget -q -O- https://raw.githubusercontent.com/OCA/pylint-odoo/master/requirements.txt | xargs pip install && \
     # Extra package for pylint-odoo plugin
     npm install -g jshint
 
