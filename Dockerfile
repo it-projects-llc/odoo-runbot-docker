@@ -3,7 +3,7 @@ FROM odoo:8.0
 USER root
 
 RUN apt-get update || true && \
-    apt-get install -y python-matplotlib emacs-nox git net-tools tree python-pip file nginx python-dev sudo htop locales locales-all wget fonts-dejavu && \
+    apt-get install -y python-matplotlib emacs-nox git net-tools tree python-pip python3-pip file nginx python-dev sudo htop locales locales-all wget fonts-dejavu && \
     pip install gevent psycogreen && \
     #update werkzeug to make phantomjs work. See http://odoo-development.readthedocs.io/en/latest/dev/tests/js.html#regular-phantom-js-tests
     pip install werkzeug --upgrade && \
