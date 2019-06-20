@@ -51,7 +51,12 @@ RUN wget -q -O- https://raw.githubusercontent.com/it-projects-llc/misc-addons/11
     wget -q -O- https://raw.githubusercontent.com/it-projects-llc/odoo-telegram/11.0/requirements.txt | xargs pip3 install && \
     wget -q -O- https://raw.githubusercontent.com/it-projects-llc/odoo-saas-tools/11.0/requirements.txt | xargs pip3 install
 
-
+RUN wget -q -O- https://raw.githubusercontent.com/it-projects-llc/misc-addons/12.0/requirements.txt | xargs pip3 install && \
+    wget -q -O- https://raw.githubusercontent.com/it-projects-llc/pos-addons/12.0/requirements.txt | xargs pip3 install && \
+    wget -q -O- https://raw.githubusercontent.com/it-projects-llc/mail-addons/12.0/requirements.txt | xargs pip3 install && \
+    wget -q -O- https://raw.githubusercontent.com/it-projects-llc/access-addons/12.0/requirements.txt | xargs pip3 install && \
+    wget -q -O- https://raw.githubusercontent.com/it-projects-llc/website-addons/12.0/requirements.txt | xargs pip3 install && \
+    wget -q -O- https://raw.githubusercontent.com/it-projects-llc/saas-addons/12.0/requirements.txt | xargs pip3 install
 
 USER odoo
 
