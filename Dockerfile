@@ -35,6 +35,15 @@ RUN touch /var/log/nginx/error.log && \
     chown odoo:odoo -R /var/log/nginx && \
     chown odoo:odoo -R /var/lib/nginx/
 
+# python3 support
+# https://unix.stackexchange.com/questions/332641/how-to-install-python-3-6
+RUN wget https://www.python.org/ftp/python/3.6.3/Python-3.6.3.tgz && \
+    tar xvf Python-3.6.3.tgz && \
+    cd Python-3.6.3 && \
+    ./configure --enable-optimizations && \
+    make -j8 && \
+    make altinstall && \
+    apt-get install -y python3-pip
 
 ENV BUILD_DATE=2016_11_03
 
