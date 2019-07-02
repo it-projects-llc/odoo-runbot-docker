@@ -62,7 +62,7 @@ RUN pip3 install -r https://raw.githubusercontent.com/it-projects-llc/misc-addon
 RUN pip install urllib3==1.23
 
 # TODO: shall we move it to main DOcker file?
-RUN  rm /usr/bin/python3 && ln -s /usr/bin/python3.6 /usr/bin/python3
+RUN  rm /usr/bin/python3 && ln -s /usr/bin/python3.6 /usr/local/bin/python3
 
 USER odoo
 
