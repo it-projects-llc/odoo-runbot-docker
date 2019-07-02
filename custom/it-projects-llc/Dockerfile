@@ -58,5 +58,8 @@ RUN pip3 install -r https://raw.githubusercontent.com/it-projects-llc/misc-addon
     pip3 install -r https://raw.githubusercontent.com/it-projects-llc/website-addons/12.0/requirements.txt || true && \
     pip3 install -r https://raw.githubusercontent.com/it-projects-llc/saas-addons/12.0/requirements.txt || true
 
+# see https://github.com/urllib3/urllib3/issues/1456#issuecomment-430404098
+RUN pip install urllib3==1.23
+
 USER odoo
 
