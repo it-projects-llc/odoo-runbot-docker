@@ -43,7 +43,15 @@ RUN wget https://www.python.org/ftp/python/3.6.3/Python-3.6.3.tgz && \
     ./configure --enable-optimizations && \
     make -j8 && \
     make altinstall && \
-    apt-get install -y python3-pip
+    apt-get install -y python3-pip && \
+    rm /usr/bin/python3 && \
+    ln -s /usr/local/bin/python3.6 /usr/bin/python3
+
+RUN apt-get install -y libffi-dev libssl-dev python-pandas && \
+    pip3 install -r https://raw.githubusercontent.com/odoo/odoo/12.0/requirements.txt || true && \
+    pip3 install -r https://raw.githubusercontent.com/odoo/odoo/11.0/requirements.txt || true && \
+    pip install -r https://raw.githubusercontent.com/odoo/odoo/10.0/requirements.txt || true
+
 
 ENV BUILD_DATE=2016_11_03
 

@@ -9,8 +9,6 @@ RUN true && \
 
 ENV BUILD_DATE_CUSTOM=2016_08_05
 
-RUN apt-get install -y libffi-dev libssl-dev python-pandas
-
 RUN pip install -r https://raw.githubusercontent.com/it-projects-llc/misc-addons/8.0/requirements.txt || true && \
     pip install -r https://raw.githubusercontent.com/it-projects-llc/pos-addons/8.0/requirements.txt || true && \
     pip install -r https://raw.githubusercontent.com/it-projects-llc/mail-addons/8.0/requirements.txt || true && \
@@ -60,9 +58,6 @@ RUN pip3 install -r https://raw.githubusercontent.com/it-projects-llc/misc-addon
 
 # see https://github.com/urllib3/urllib3/issues/1456#issuecomment-430404098
 RUN pip install urllib3==1.23
-
-# TODO: shall we move it to main DOcker file?
-RUN  rm /usr/bin/python3 && ln -s /usr/local/bin/python3.6 /usr/bin/python3
 
 USER odoo
 
